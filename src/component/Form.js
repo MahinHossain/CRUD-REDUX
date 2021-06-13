@@ -23,20 +23,26 @@ export default function GetApiData() {
   };
   const handlesubmit = (e) => {
     e.preventDefault();
+
+    if (state.ysnActive === "") {
+      alert("please select activity");
+      return false;
+    }
+
     dispatch(submitUserData(state));
   };
-  useEffect(() => {}, []);
+  // useEffect(() => {}, []);
 
   return (
     <div className="mt-5">
       {" "}
       <form onSubmit={(e) => handlesubmit(e)}>
         <div class="form-group">
-          <label for="exampleInputEmail1">Name</label>
+          <label className="text-danger font-weight-bold">Name</label>
           <input
             value={userinput.strProgramTypeName}
             type="text"
-            class="form-control"
+            class="form-control "
             aria-describedby="emailHelp"
             placeholder="Enter email"
             onChange={(e) => handleInput(e.target.value, "strProgramTypeName")}
@@ -46,6 +52,8 @@ export default function GetApiData() {
         </div>
 
         <div class="form-check"></div>
+
+        <label className="text-danger font-weight-bold"> Please select</label>
         <select
           class="form-select form-select mb-3"
           aria-label=".form-select-lg example"
@@ -54,10 +62,15 @@ export default function GetApiData() {
           value={userinput.ysnActive}
           required
         >
-          <option selected>Select Active or Not</option>
-          <option>1</option>
-          <option>0</option>
+          {/* <option >1</option>
+          <option>0</option> */}
           {/* onChange={(e) => handleInput(e.target.value)} */}
+          <option selected required value="1">
+            1
+          </option>
+          <option required value="0">
+            0
+          </option>
         </select>
 
         <button type="submit" class="btn btn-primary">

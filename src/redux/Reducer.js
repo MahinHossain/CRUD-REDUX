@@ -2,9 +2,10 @@ import * as Types from "./Types";
 
 const initializitState = {
   getData: [],
+  singleitem: {},
   userInputData: {
-    strProgramTypeName: " ",
-    ysnActive: " ",
+    strProgramTypeName: "",
+    ysnActive: "",
   },
   submitData: [],
   isloading: "",
@@ -13,10 +14,15 @@ const initializitState = {
 function Reducer(state = initializitState, action) {
   switch (action.type) {
     case Types.GET_API_DATA:
-      console.log(`action.payload`, action.payload);
       return {
         ...state,
         getData: action.payload,
+      };
+      break;
+    case Types.GET_SINGLE_API_DATA:
+      return {
+        ...state,
+        singleitem: action.payload,
       };
       break;
     case Types.GET_USER_INPUT_DATA:
@@ -31,7 +37,14 @@ function Reducer(state = initializitState, action) {
         ...state,
       };
       break;
-      break;
+
+    // case Types.UPDATE_ITEM:
+    //   alert("data inserted");
+    //   return {
+    //     ...state,
+    //   };
+    //   break;
+    //   break;
     case Types.isloading:
       return {
         ...state,

@@ -20,24 +20,46 @@ export const getUserData = (value) => (dispatch) => {
   dispatch({ type: Types.GET_USER_INPUT_DATA, payload: value });
 };
 export const submitUserData = (value) => (dispatch) => {
-  console.log(`submitUserData`, value.ysnActive);
   // value.ysnActive = +value["ysnActive"];
-  if (value.ysnActive.length == 0) {
-    alert("please inser data ");
-    return false;
-  }
+
   axios
     .post(
       "https://iapps.akij.net/asll/public/api/v1/psd/programTypeStore",
       value
     )
     .then((res) => {
-      console.log("inside then block");
       dispatch({ type: Types.SUBMIT_DATA, payload: res.data.data });
-      // dispatch(getApiData());
-      console.log("res => ", res);
     })
     .catch((err) => {
       console.log("error => ", err);
     });
+};
+export const deleteitemAction = (intProgramTypeId) => (dispatch) => {
+  axios
+    .delete(
+      `https://iapps.akij.net/asll/public/api/v1/psd/programTypeDelete/${intProgramTypeId}`
+    )
+    .then((res) => {
+      alert("Deleted");
+      dispatch(getApiData());
+    });
+};
+export const updateItem = (updatedata) => (dispatch) => {
+  if (updatedata.ysnActive.length == 0) {
+    alert("please select activity,");
+    return false;
+  }
+
+  axios
+    .put(
+      `https://iapps.akij.net/asll/public/api/v1/psd/programTypeUpdate`,
+      updatedata
+    )
+    .then((res) => {
+      alert("Data Updated");
+    });
+};
+
+export const singlegetApiData = (item) => (dispatch) => {
+  dispatch({ type: Types.GET_SINGLE_API_DATA, payload: item });
 };
