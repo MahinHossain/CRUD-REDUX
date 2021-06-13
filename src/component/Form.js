@@ -11,8 +11,8 @@ export default function GetApiData() {
   const submitUserdarta = useSelector((state) => state.reducer.submitData);
   const [userinput, setuserinput] = useState({ apiData });
   const [state, setstate] = useState({
-    strProgramTypeName: "",
-    ysnActive: "",
+    strProgramTypeName: " ",
+    ysnActive: " ",
   });
 
   const handleInput = (value, name) => {
@@ -23,12 +23,13 @@ export default function GetApiData() {
   };
   const handlesubmit = (e) => {
     e.preventDefault();
+    console.log(`state`, state);
 
-    if (state.ysnActive === "") {
-      alert("please select activity");
+    if (state.ysnActive == " ") {
+      alert("please select activit");
       return false;
     }
-
+    console.log(`state`, state);
     dispatch(submitUserData(state));
   };
   // useEffect(() => {}, []);
@@ -60,15 +61,14 @@ export default function GetApiData() {
           onChange={(e) => handleInput(e.target.value, "ysnActive")}
           name="ysnActive"
           value={userinput.ysnActive}
-          required
         >
           {/* <option >1</option>
           <option>0</option> */}
-          {/* onChange={(e) => handleInput(e.target.value)} */}
-          <option selected required value="1">
+
+          <option selected value="1">
             1
           </option>
-          <option required value="0">
+          <option selected value="0">
             0
           </option>
         </select>
