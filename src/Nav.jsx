@@ -27,7 +27,7 @@ export default function Nav() {
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link list-group-item-warning btn ml-4" href="#">
+            <a class="nav-link list-group-item-warning btn" href="#">
               <Link to="/showdata"> Show Data</Link>
             </a>
           </li>

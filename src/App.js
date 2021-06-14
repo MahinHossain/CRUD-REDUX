@@ -24,9 +24,9 @@ function App() {
           <Route exact path="/">
             <From />
           </Route>
-          <Route path="/ShowData">
+          {/* <Route path="/ShowData">
             <ShowData />
-          </Route>
+          </Route> */}
           <Route path="/edit/:id">
             <EditItem />
           </Route>{" "}

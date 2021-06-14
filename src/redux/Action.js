@@ -29,6 +29,7 @@ export const submitUserData = (value) => (dispatch) => {
     )
     .then((res) => {
       dispatch({ type: Types.SUBMIT_DATA, payload: res.data.data });
+      dispatch(getApiData());
     })
     .catch((err) => {
       console.log("error => ", err);
@@ -57,6 +58,7 @@ export const updateItem = (updatedata) => (dispatch) => {
     )
     .then((res) => {
       alert("Data Updated");
+      dispatch(getApiData());
     });
 };
 
