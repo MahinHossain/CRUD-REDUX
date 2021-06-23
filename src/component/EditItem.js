@@ -18,22 +18,11 @@ export default function EditItem() {
 
   const selectedData = useSelector((state) => state.reducer.singleitem);
 
-  console.log(`selectedData`, selectedData);
-
   const getData = useSelector((state) => state.reducer.getData);
 
   const [updatedata, setupdateItem] = useState({});
 
-  //   {
-  //   strProgramTypeName: selectedData.strProgramTypeName,
-  //   ysnActive: selectedData.ysnActive,
-  //   intProgramTypeId: id,
-  // }
-
-  console.log(`updatedata`, updatedata);
   const handleInput = (value, name) => {
-    // console.log(`value`, value);
-    // console.log(`name`, name);
     let stateData = { ...updatedata };
 
     stateData[name] = value;
@@ -47,7 +36,6 @@ export default function EditItem() {
   }, [selectedData]);
 
   const handleUpdate = (e) => {
-    console.log(`upda`, updatedata);
     e.preventDefault();
     if (
       updatedata.ysnActive == undefined ||
@@ -74,7 +62,7 @@ export default function EditItem() {
             class="form-control"
             aria-describedby="emailHelp"
             name="strProgramTypeName"
-            placeholder={updatedata.strProgramTypeName}
+            placeholder="Enter name"
             onChange={(e) => handleInput(e.target.value, "strProgramTypeName")}
             required
           />

@@ -10,26 +10,25 @@ import From from "./component/Form";
 import Nav from "./Nav";
 import EditItem from "./component/EditItem";
 import axios from "axios";
+import Alerts from "./component/Alerts";
 function App() {
-  const dispatch = useDispatch();
-  useEffect(() => {}, []);
-
+  //
   return (
     <Router>
       <Nav />
+      {/* <Alerts /> */}
 
       <Switch>
         <div className="container">
-          {" "}
           <Route exact path="/">
             <From />
           </Route>
-          {/* <Route path="/ShowData">
-            <ShowData />
-          </Route> */}
+          <Route path="/ShowData">
+            <Alerts />
+          </Route>
           <Route path="/edit/:id">
             <EditItem />
-          </Route>{" "}
+          </Route>
         </div>
       </Switch>
     </Router>

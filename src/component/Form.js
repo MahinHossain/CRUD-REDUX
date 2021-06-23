@@ -27,18 +27,18 @@ export default function GetApiData() {
 
     setstate(stateData);
   };
+  console.log(`object`, state);
 
   const handlesubmit = (e) => {
     e.preventDefault();
 
-    if (state.ysnActive == " ") {
-      alert("please select activit");
+    if (state.ysnActive == " " || state.ysnActive == "Please select") {
+      alert("Please select activity");
       return false;
     }
 
     dispatch(submitUserData(state));
   };
-  console.log(`state`, state);
 
   return (
     <div className="mt-5">

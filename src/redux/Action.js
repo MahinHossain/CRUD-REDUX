@@ -9,7 +9,6 @@ export const getApiData = () => async (dispatch) => {
     .then((res) => {
       data = res.data.data;
       isloading1 = true;
-
       data.sort();
       data.reverse();
       dispatch({ type: Types.GET_API_DATA, payload: data });

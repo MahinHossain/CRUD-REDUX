@@ -1,23 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-
+import { Modal, Button } from "react-bootstrap";
+import Alerts from "./Alerts";
 import {
   getApiData,
   deleteitemAction,
   singlegetApiData,
 } from "../redux/Action";
 export default function ShowData() {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const getData = useSelector((state) => state.reducer.getData);
   const loader = useSelector((state) => state.reducer.isloading);
   const singleitem1 = useSelector((state) => state.reducer.singleitem);
   const [data, setdata] = useState(getData);
+  console.log(`getData`, getData);
 
+  const tableItem = useRef([]);
+  const Chekboxref = useRef([]);
+  console.log("tableItem -> ", tableItem);
+
+  const [check, setcheck] = useState([]);
+  const [checkTrue, setcheckTrue] = useState(false);
   const dispatch = useDispatch();
   const [searchData1, setsearchData] = useState("");
-  // useEffect(() => {
-  //   dispatch(getApiData());
-  // }, []);
+  const [showModal, setShowModal] = useState(false);
 
   const searchData = (e) => {
     setsearchData(e);
@@ -26,6 +35,37 @@ export default function ShowData() {
   const singleitem = (item) => {
     dispatch(singlegetApiData(item));
   };
+  const itemCheck = (event) => {
+    const checkClone = check.concat(event.target.value);
+
+    setcheck(checkClone);
+  };
+
+  const checkboxHandler = (e, index) => {
+    console.log(`tableItem`, tableItem);
+    if (e.target.checked) {
+      tableItem.current[index].style.backgroundColor = "red";
+    } else {
+      tableItem.current[index].style.backgroundColor = "";
+    }
+    console.log(`tableItem curent back`, tableItem);
+    // if (tableItem.current[index].style.backgroundColor === "green") {
+    //   tableItem.current[index].style.backgroundColor = "";
+
+    //   return;
+    // }
+    // console.log(`item`, item);
+  };
+  const checkboxHandlerTh = (e) => {
+    console.log(`Chekboxref`, Chekboxref);
+    Chekboxref.current.forEach((checkbox) => {
+      checkbox.checked = !checkbox.checked;
+    });
+
+    setcheckTrue(e.target.checked);
+  };
+
+  console.log("table item => ", tableItem);
 
   return (
     <div>
@@ -60,7 +100,18 @@ export default function ShowData() {
               </form>
               <table class="table table-striped table-hover  table-bordered  mt-5  table-responsive-md table-responsive-sm">
                 <thead>
-                  <tr>
+                  <tr className={checkTrue ? "bg-warning" : ""}>
+                    <th scope="col" className=" btn-warning">
+                      <div class="form-check">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="exampleCheck1"
+                          // value={item.intProgramTypeId}
+                          onChange={(e) => checkboxHandlerTh(e)}
+                        />{" "}
+                      </div>
+                    </th>
                     <th scope="col">Id</th>
                     <th scope="col">Name</th>
                     <th scope="col">Active Or Not</th>
@@ -78,8 +129,25 @@ export default function ShowData() {
                         return filterItem;
                       }
                     })
-                    .map((item) => (
-                      <tr>
+                    .map((item, i) => (
+                      <tr ref={(el) => (tableItem.current[i] = el)}>
+                        <td>
+                          <div class="form-check">
+                            <input
+                              ref={(el) => (Chekboxref.current[i] = el)}
+                              type="checkbox"
+                              class="form-check-input"
+                              id="exampleCheck1"
+                              value={item.intProgramTypeId}
+                              onChange={(e) => checkboxHandler(e, i)}
+                              itemCheck
+                            />
+                            <label
+                              class="form-check-label"
+                              for="exampleCheck1"
+                            ></label>
+                          </div>
+                        </td>
                         <td>{item.intProgramTypeId}</td>
                         <td>{item.strProgramTypeName}</td>
                         <td>{item.ysnActive}</td>
@@ -95,10 +163,14 @@ export default function ShowData() {
                           </button>
 
                           <button
-                            className="btn btn-danger"
-                            onClick={() =>
-                              dispatch(deleteitemAction(item.intProgramTypeId))
-                            }
+                            className="btn btn-danger ml-3"
+                            onClick={() => {
+                              if (window.confirm("Delete the item?")) {
+                                dispatch(
+                                  deleteitemAction(item.intProgramTypeId)
+                                );
+                              }
+                            }}
                           >
                             Delete
                           </button>
